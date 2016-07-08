@@ -1,0 +1,20 @@
+{
+  "name": "bson",
+  "version": "1.0.1",
+  "author": "Marco Paland",
+  "license": "MIT",
+  "dependencies": {
+    "lite-server": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "mocha -R spec ./js/spec/**/*.spec.js",
+    "dev": "lite-server"
+  }
+}

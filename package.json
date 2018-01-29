@@ -22,5 +22,21 @@
     "@types/chai": "^4.1.2",
     "@types/mocha": "^2.2.47",
     "@types/node": "^9.4.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpaland/bsonfy.git"
+  },
+  "keywords": [
+    "BSON",
+    "Parser",
+    "Serializer",
+    "Deserializer",
+    "JSON",
+    "Typescript"
+  ],
+  "bugs": {
+    "url": "https://github.com/mpaland/bsonfy/issues"
+  },
+  "homepage": "https://github.com/mpaland/bsonfy#readme"
 }

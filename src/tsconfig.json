@@ -5,11 +5,12 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "js",
+    "declaration": true,
+    "outDir": "../dist",
     "rootDir": "."
   },
   "exclude": [
-    "js",
+    "dist",
     "node_modules",
     "typings/main",
     "typings/main.d.ts"

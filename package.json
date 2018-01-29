@@ -1,20 +1,26 @@
 {
-  "name": "bson",
-  "version": "1.0.1",
+  "name": "bsonfy",
+  "version": "1.0.2",
   "author": "Marco Paland",
   "license": "MIT",
-  "dependencies": {
-    "lite-server": "latest",
-    "typescript": "latest"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^2.5.2"
-  },
+  "description": "Ultrafast BSON serializer/parser",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "pretest": "npm run build",
-    "test": "mocha -R spec ./js/spec/**/*.spec.js",
+    "build": "tsc -p ./src",
+    "pretest": "tsc -p ./test",
+    "test": "mocha ./test/out/test/**/*_test.js",
     "dev": "lite-server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "latest",
+    "lite-server": "latest",
+    "ts-node": "^4.1.0",
+    "chai": "^4.1.2",
+    "mocha": "^5.0.0",
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^2.2.47",
+    "@types/node": "^9.4.0"
   }
 }

@@ -1,20 +1,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // \author (c) Marco Paland (marco@paland.com)
-//             2016, PALANDesign Hannover, Germany
+//             2016-2018, PALANDesign Hannover, Germany
 //
 // \license The MIT License (MIT)
 //
-// This file is part of the mipher crypto library.
+// This file is part of the bsonfy library.
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -26,7 +26,7 @@
 // \brief Extrem fast BSON implementation in typescript with NO dependencies
 //        See http://bsonspec.org for details
 //        Usage:
-//        import {BSON} from './bson';
+//        import { BSON } from './bsonfy';
 //        let obj  = { id: 10, time: new BSON.UTC(), arr: new Uint8Array([1, 2, 3, 4, 5, 6, 7, 8]) };
 //        let bson = BSON.serialize(obj);
 //        let orig = BSON.deserialize(bson);
@@ -39,7 +39,7 @@ export namespace BSON {
   /**
    * BSON module version
    */
-  const version: string = "1.0.1";
+  const version: string = '1.0.2';
 
 
   /**
@@ -52,7 +52,7 @@ export namespace BSON {
       this._id = new Uint8Array(id);
     }
 
-    buffer() {
+    buffer(): Uint8Array {
       return this._id;
     }
   }
@@ -68,7 +68,7 @@ export namespace BSON {
       this._id = new Uint8Array(id);
     }
 
-    buffer() {
+    buffer(): Uint8Array {
       return this._id;
     }
   }
@@ -81,10 +81,10 @@ export namespace BSON {
     private _time: Uint8Array;
 
     constructor(time?: Uint8Array | Array<number> | string) {
-      this._time = (typeof time !== "string") ? new Uint8Array(time || number2long(Date.now())) : number2long(+new Date(time));
+      this._time = (typeof time !== 'string') ? new Uint8Array(time || number2long(Date.now())) : number2long(+new Date(time));
     }
 
-    buffer() {
+    buffer(): Uint8Array {
       return this._time;
     }
 
@@ -92,7 +92,7 @@ export namespace BSON {
      * Convert an (ISO) date string
      * @param {String} date (ISO) Date string
      */
-    fromString(date: string) {
+    fromString(date: string): void {
       this._time = number2long(+new Date(date));
     }
 
@@ -114,7 +114,7 @@ export namespace BSON {
    * @param {Object} obj The object to get the size from
    * @return {Number} The object size in bytes
    */
-  function getObjectSize(obj: Object) {
+  function getObjectSize(obj: Object): number {
     let len = 4 + 1;                                // handle the obj.length prefix + terminating '0'
     for (let key in obj) {
       len += getElementSize(key, obj[key]);
@@ -129,7 +129,7 @@ export namespace BSON {
    * @param {Object} value
    * @return {Number} The element size in bytes
    */
-  function getElementSize(name: string, value: any) {
+  function getElementSize(name: string, value: any): number {
     let len = 1;                                    // always starting with 1 for the data type byte
     if (name) {
       len += strlen(name) + 1;                      // cstring: name + '0' termination
@@ -401,7 +401,7 @@ export namespace BSON {
         // Document error: Illegal key name
         return undefined;
       }
-      let name:any = bin2str(buffer.subarray(i, end));
+      let name: any = bin2str(buffer.subarray(i, end));
       if (returnArray) {
         name = parseInt(name);        // convert to number as array index
       }
@@ -554,7 +554,7 @@ export namespace BSON {
    * @return {Uint8Array} Byte array
    */
   function str2bin(str: string): Uint8Array {
-    str = str.replace(/\r\n/g, "\n");
+    str = str.replace(/\r\n/g, '\n');
     let bin = [], p = 0;
     for (let i = 0, len = str.length; i < len; i++) {
       let c = str.charCodeAt(i);
@@ -579,7 +579,7 @@ export namespace BSON {
    * @return {String} UTF-8 Text string
    */
   function bin2str(bin: Uint8Array): string {
-    let str = "", len = bin.length, i = 0, c, c2, c3;
+    let str = '', len = bin.length, i = 0, c, c2, c3;
 
     while (i < len) {
       c = bin[i];

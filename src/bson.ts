@@ -547,30 +547,15 @@ export namespace BSON {
     return hi * TWO_PWR_32 + ((lo >= 0) ? lo : TWO_PWR_32 + lo);
   }
 
+  const utf8Encoder = new TextEncoder();
+  const utf8Decoder = new TextDecoder();
 
   /**
    * Convert a string (UTF-8 encoded) to a byte array
    * @param {String} str UTF-8 encoded string
    * @return {Uint8Array} Byte array
    */
-  function str2bin(str: string): Uint8Array {
-    str = str.replace(/\r\n/g, '\n');
-    let bin = [], p = 0;
-    for (let i = 0, len = str.length; i < len; i++) {
-      let c = str.charCodeAt(i);
-      if (c < 128) {
-        bin[p++] = c;
-      } else if (c < 2048) {
-        bin[p++] = (c >>> 6) | 192;
-        bin[p++] = (c & 63) | 128;
-      } else {
-        bin[p++] = (c >>> 12) | 224;
-        bin[p++] = ((c >>> 6) & 63) | 128;
-        bin[p++] = (c & 63) | 128;
-      }
-    }
-    return new Uint8Array(bin);
-  }
+   const str2bin = utf8Encoder.encode.bind(utf8Encoder);
 
 
   /**
@@ -578,29 +563,7 @@ export namespace BSON {
    * @param {Uint8Array} bin UTF-8 text given as array of bytes
    * @return {String} UTF-8 Text string
    */
-  function bin2str(bin: Uint8Array): string {
-    let str = '', len = bin.length, i = 0, c, c2, c3;
-
-    while (i < len) {
-      c = bin[i];
-      if (c < 128) {
-        str += String.fromCharCode(c);
-        i++;
-      }
-      else if ((c > 191) && (c < 224)) {
-        c2 = bin[i + 1];
-        str += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-        i += 2;
-      }
-      else {
-        c2 = bin[i + 1];
-        c3 = bin[i + 2];
-        str += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-        i += 3;
-      }
-    }
-    return str;
-  }
+   const bin2str = utf8Decoder.decode.bind(utf8Decoder);
 
 
   /**
@@ -609,7 +572,7 @@ export namespace BSON {
    * @return {Number} Stringlength in bytes (not in chars)
    */
   function strlen(str: string): number {
-    return encodeURI(str).split(/%..|./).length - 1;
+    return utf8Encoder.encode(str).length;
   }
 
 } // namespace BSON

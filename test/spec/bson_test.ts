@@ -136,8 +136,8 @@ describe('BSON', () => {
     });
 
     it("checks UTF-8 string", function () {
-      let bson = BSON.serialize({ str: "\u00C4\u00D6\u00DC\u00DF" });
-      expect(bin2hex(bson)).to.deep.equal("17000000027374720009000000c384c396c39cc39f0000");
+      let bson = BSON.serialize({ str: "\u00C4\u00D6\u00DC\u00DF\ud83e\uddff" });
+      expect(bin2hex(bson)).to.deep.equal("1b00000002737472000d000000c384c396c39cc39ff09fa7bf0000");
     });
 
     it("checks boolean", function () {
